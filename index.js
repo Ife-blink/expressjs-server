@@ -1,6 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import { search } from './search';
+import { search } from './search.js';
 import cors from 'cors'
 const app = express();
 
