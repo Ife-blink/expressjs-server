@@ -1,13 +1,25 @@
 import express from 'express';
+import bodyParser from 'body-parser';
 const app = express();
+
+const router = express.Router()
+
+// Configuring body parser middleware
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+app.use('/api', router)
 
 app.get('/', (req, res) => {
     res.send('Choo Choo! Welcome to your Express app 🚅');
 })
 
-app.get("/json", (req, res) => {
-    res.json({"Choo Choo": "Welcome to your Express app 🚅"});
-})
+
+router.post('/search', (req, res) => {
+    res.send('Post API')
+    let data = req.body;
+    res.send('Data Received: ' + JSON.stringify(data));
+  })
 
 const port = process.env.PORT || 3000;
 
