@@ -18,8 +18,7 @@ export const search = async () => {
   
   const supabase = createClient(url, privateKey);
 
-  const embeddings = await new OpenAIEmbeddings().embedQuery(`We are a ${category} project building a ${description} for at least ${timespent}.
-  We are a team of ${teamsize} building on ${choiceblockchain}. We currently have ${traction} and looking for the best grants for us`)
+  const embeddings = await new OpenAIEmbeddings().embedQuery(``)
   /*
   Category: Array * 3
   Description: String
@@ -27,6 +26,8 @@ export const search = async () => {
   Traction: Array * 5 || String
   Specific Blockchain: Boolean || String
   Size of team: Number
+  We are a ${category} project building a ${description} for at least ${timespent}.
+  We are a team of ${teamsize} building on ${choiceblockchain}. We currently have ${traction} and looking for the best grants for us
   */
   // const { data, error } = await supabase.from('documents').select().textSearch('content', `'this?'`)
   // console.log(data)
