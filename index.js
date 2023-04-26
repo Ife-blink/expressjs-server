@@ -1,5 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import { search } from './search';
 import cors from 'cors'
 const app = express();
 
@@ -19,7 +20,7 @@ app.get('/', (req, res) => {
 
 
 router.post('/search', (req, res) => {
-    res.send('Post API')
+    res.send({name : 'Post API'})
     let data = req.body;
     res.send('Data Received: ' + JSON.stringify(data));
   })
