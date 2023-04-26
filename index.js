@@ -1,8 +1,11 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import cors from 'cors'
 const app = express();
 
 const router = express.Router()
+
+app.use(cors())
 
 // Configuring body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
