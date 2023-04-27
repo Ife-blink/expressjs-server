@@ -15,12 +15,12 @@ app.use(bodyParser.json());
 app.use('/api', router)
 
 app.get('/', (req, res) => {
-    res.send('Choo Choo! Welcome to your Express app 🚅');
+    res.send('this is the server for the Grant finder application 🚅');
 })
 
 
 router.post('/search', (req, res) => {
-    res.send({name : 'Post API'})
+    res.send({name : 'Data Received'})
     let data = req.body;
     res.send('Data Received: ' + JSON.stringify(data));
   })

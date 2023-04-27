@@ -14,18 +14,13 @@ if (!url) throw new Error(`Expected env var SUPABASE_URL`);
 
 
 // {category, description, timespent, teamsize, choiceblockchain, traction}
-export const search = async () => {
+export const search = async ({category, description, timespent, teamsize, choiceblockchain, traction}) => {
   
   const supabase = createClient(url, privateKey);
 
-  const embeddings = await new OpenAIEmbeddings().embedQuery(``)
+  const embeddings = await new OpenAIEmbeddings().embedQuery(`We are a ${category} project building a ${description} for at least ${timespent}.
+  We are a team of ${teamsize} building on ${choiceblockchain}. We currently have ${traction} and looking for the best grants for us`)
   /*
-  Category: Array * 3
-  Description: String
-  Product Age: String
-  Traction: Array * 5 || String
-  Specific Blockchain: Boolean || String
-  Size of team: Number
   We are a ${category} project building a ${description} for at least ${timespent}.
   We are a team of ${teamsize} building on ${choiceblockchain}. We currently have ${traction} and looking for the best grants for us
   */
@@ -41,7 +36,8 @@ export const search = async () => {
 };
 
   const { data, error } = await supabase.rpc("match_documents", matchDocumentsParams)
+
+  return data
   console.log(data)
 };
 
-search();
