@@ -20,9 +20,9 @@ app.get('/', (req, res) => {
 
 
 router.post('/search', (req, res) => {
-    res.send({name : 'Data Received'})
     let data = req.body;
     res.send('Data Received: ' + JSON.stringify(data));
+    res.send({name : 'Data Received'})
   })
 
 const port = process.env.PORT || 3000;
