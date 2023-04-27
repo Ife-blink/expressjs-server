@@ -1,6 +1,6 @@
 import { OpenAIEmbeddings } from "langchain/embeddings/openai";
 import { createClient } from "@supabase/supabase-js";
-// import { SupabaseHybridSearch } from "langchain/retrievers/supabase";
+
 import * as dotenv from 'dotenv'
 
 
@@ -15,6 +15,7 @@ if (!url) throw new Error(`Expected env var SUPABASE_URL`);
 
 // {category, description, timespent, teamsize, choiceblockchain, traction}
 export const search = async ({category, description, timespent, teamsize, choiceblockchain, traction}) => {
+  
   
   const supabase = createClient(url, privateKey);
 
@@ -37,7 +38,10 @@ export const search = async ({category, description, timespent, teamsize, choice
 
   const { data, error } = await supabase.rpc("match_documents", matchDocumentsParams)
 
-  return data
-  console.log(data)
+  const responseData = await data
+  console.log(responseData)
+  return responseData
+  
 };
 
+  search( "defi", "A defi protocol", "1 year", "4 people", "solana", "4 daily users");

@@ -19,10 +19,10 @@ app.get('/', (req, res) => {
 })
 
 
-router.post('/search', (req, res) => {
+router.post('/search', async (req, res) => {
     let data = req.body;
-    let response = search(data.category, data.description, data.duration, data.teamsize, data.blockchain, data.traction)
-    res.send(JSON.stringify(response));
+    let response = await search(`${data.category}`, `${data.description}`, `${data.duration}`, `${data.teamsize}`, `${data.blockchain}`, `${data.traction}`)
+    res.send(JSON.stringify(response[0]));
   })
 
 const port = process.env.PORT || 3000;
