@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
 
 router.post('/search', (req, res) => {
     let data = req.body;
-    res.send('Data Received: ' + JSON.stringify(data));
+    res.send(JSON.stringify(data));
     res.send({name : 'Data Received'})
   })
 
