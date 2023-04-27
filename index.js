@@ -21,8 +21,8 @@ app.get('/', (req, res) => {
 
 router.post('/search', (req, res) => {
     let data = req.body;
-    res.send(JSON.stringify(data));
-    res.send({name : 'Data Received'})
+    let response = search(data.category, data.description, data.duration, data.teamsize, data.blockchain, data.traction)
+    res.send(JSON.stringify(response));
   })
 
 const port = process.env.PORT || 3000;
