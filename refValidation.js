@@ -13,7 +13,11 @@ const url = process.env.SUPABASE_URL;
 if (!url) throw new Error(`Expected env var SUPABASE_URL`);
 
 // Initialize Supabase client
-const supabase = createClient(url, privateKey);
+const supabase = createClient(url, privateKey, {
+  auth: {
+    persistSession: false
+  
+}});
 
 export function generateReferralCode(length) {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -55,7 +59,7 @@ async function storeToken(referralToken) {
 // console.log(code); // Example output: "AB3R7X"
 // storeToken(code)
 
-export async function verifyReferralToken(referralToken, id) {
+export async function verifyReferralToken(referralToken) {
     try {
       const { data, error } = await supabase
         .from('ref_token')
@@ -63,11 +67,10 @@ export async function verifyReferralToken(referralToken, id) {
         .eq('ref_token', referralToken)
         .single();
 
-      console.log(data);
-      console.log(error)
   
       if (error) {
-        throw new Error('Error verifying referral token.');
+        console.error('Referral token not found.');
+        return false
       }
 
       
@@ -77,9 +80,9 @@ export async function verifyReferralToken(referralToken, id) {
     }
   }
   
-  const id = "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d";
-  verifyReferralToken('QX9GPX', id)
-   .then(results => {
-    console.log(results)
-   }) 
+  // const id = "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d";
+  // verifyReferralToken('HF440I')
+  //  .then(results => {
+  //   console.log(results)
+  //  }) 
   
