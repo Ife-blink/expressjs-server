@@ -18,7 +18,7 @@ if (!url) throw new Error(`Expected env var SUPABASE_URL`);
 const supabase = createClient(url, privateKey);
 
 // Function to store wallet addresses for a user
-async function storeWalletAddresses(uuid) {
+export async function createWalletAddresses(uuid) {
   try {
      
     const solWallet = generateSolanaWallet();
@@ -71,4 +71,4 @@ async function storeWalletAddresses(uuid) {
 //   ethereum: ['ETHEREUM_ADDRESS_1', 'ETHEREUM_ADDRESS_2'], // Provide Ethereum wallet addresses
 // };
 
-storeWalletAddresses();
+createWalletAddresses();
