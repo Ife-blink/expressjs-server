@@ -50,7 +50,7 @@ async function checkUserBalance(uuid) {
 //       console.error('Error checking UUID:', error);
 //     });
 
-    async function createUserBalance(userId) {
+   export async function createUserBalance(userId) {
         try {
           // Check if the user exists in the users_balance table
           const { data: existingUser } = await supabase
@@ -83,7 +83,7 @@ async function checkUserBalance(uuid) {
         }
       }
 
-async function createWalletAddressesIfNotExists(userId) {
+export async function createWalletAddressesIfNotExists(userId) {
     try {
       // Check if the user exists in the wallets table
       const { data: existingUser } = await supabase

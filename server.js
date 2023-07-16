@@ -3,7 +3,8 @@ import bodyParser from 'body-parser';
 import { verifyReferralToken } from './refValidation.js';
 import { signUp } from './signUp.js';
 import { createClient } from "@supabase/supabase-js";
-// import { output } from "./textsplitter.js";
+import { createUserBalance } from './initializeuser.js';
+import { createWalletAddressesIfNotExists } from './initializeuser.js';
 import * as dotenv from 'dotenv'
 import cors from 'cors'
 const app = express();
@@ -44,6 +45,28 @@ router.post('/signup', async (req, res) => {
 
       if (register.success) {
         // Sign-up successful
+        return res.status(200).json({ message: 'Sign-up successful' });
+      } else {
+        // Handle sign-up error
+        return res.status(500).json({ error: register.error });
+      };
+      
+    } catch (error) {
+      return res.status(500).json({ error: 'An error occurred during registration.' });
+      console.log(error)
+    }
+  });
+
+  router.post('/init', async (req, res) => {
+    const { uuid } = req.body;
+    // Additional validation and error handling can be done here
+  
+    try {
+       createUserBalance(uuid);
+       createWalletAddressesIfNotExists(uuid)
+
+      if (register.success) {
+        // Creation successful
         return res.status(200).json({ message: 'Sign-up successful' });
       } else {
         // Handle sign-up error
