@@ -8,7 +8,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon server.js",
-    "start": "pm2 start server.js"
+    "start": "node server.js"
   },
   "devDependencies": {
     "nodemon": "^2.0.22"
