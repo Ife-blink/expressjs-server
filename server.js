@@ -82,8 +82,12 @@ router.post('/signup', async (req, res) => {
 
 
 
-const port = process.env.PORT || 3000;
 
-app.listen(port, () => {
-    console.log(`Quantum server listening on port ${port}`)
-})
+
+
+const port = process.env.PORT || 3000;
+// Listen on `port` and 0.0.0.0
+app.listen(port, "0.0.0.0", function () {
+  console.log(`Quantum server listening on port ${port}`)
+});
+
