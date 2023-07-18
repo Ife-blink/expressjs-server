@@ -99,7 +99,7 @@ async function getTokenPrice(tokenName) {
   
 
 
-async function performTokenSwap(userId, tokenFrom, amountFrom, tokenTo) {
+export async function performTokenSwap(userId, tokenFrom, amountFrom, tokenTo) {
   try {
     // Check if the user has enough balance of the 'tokenFrom' to perform the swap
     const userBalance = await getUserBalance(userId, tokenFrom);
@@ -141,10 +141,11 @@ async function performTokenSwap(userId, tokenFrom, amountFrom, tokenTo) {
     
     if (error) {
       throw new Error('Unable to record swap transaction.' );
+      return { success: false, error: error }
     }
 
     console.log('Swap transaction recorded successfully');
-
+    return { success: true, error: null }
   } catch (error) {
     console.error(error);
   }
@@ -154,4 +155,4 @@ const tokenTo = 'ethereum'
 const amountFrom = 0.3
 const tokenFrom = 'bitcoin'
 const userId = "4abb6b11-3768-4b86-9515-8d1cd4a9b4cb"
-performTokenSwap(userId, tokenFrom, amountFrom, tokenTo)
+// performTokenSwap(userId, tokenFrom, amountFrom, tokenTo)

@@ -4,6 +4,7 @@ import { verifyReferralToken } from './refValidation.js';
 import { signUp } from './signUp.js';
 import { createClient } from "@supabase/supabase-js";
 import { createUserBalance } from './initializeuser.js';
+import { performTokenSwap } from './swap.js';
 import { createWalletAddressesIfNotExists } from './initializeuser.js';
 import * as dotenv from 'dotenv'
 import cors from 'cors'
@@ -23,7 +24,7 @@ app.use(bodyParser.json());
 app.use('/api', router)
 
 app.get('/', (req, res) => {
-    res.send('this is the server for the Grant finder application 🚅');
+    res.send('this is the server for the Quantum swap application 🚅');
 })
 
 
@@ -75,6 +76,27 @@ router.post('/signup', async (req, res) => {
       
     } catch (error) {
       return res.status(500).json({ error: 'An error occurred during registration.' });
+      console.log(error)
+    }
+  });
+
+  router.post('/swap', async (req, res) => {
+    const { userId, tokenFrom, amountFrom, tokenTo } = req.body;
+    // Additional validation and error handling can be done here
+  
+    try {
+      const swap = await performTokenSwap(userId, tokenFrom, amountFrom, tokenTo)
+
+      if (swap.success) {
+        // Swap-up successful
+        return res.status(200).json({ message: 'Swap successful' });
+      } else {
+        // Handle swap error
+        return res.status(500).json({ error: swap.error });
+      };
+      
+    } catch (error) {
+      return res.status(500).json({ error: 'An error occurred during swap.' });
       console.log(error)
     }
   });
