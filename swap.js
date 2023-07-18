@@ -40,7 +40,7 @@ async function getTokenPrice(tokenName) {
 
   getTokenPrice('bitcoin')
 
-  async function getUserBalance(userId) {
+  async function getUserBalance(userId, tokenFrom) {
     try {
       // Fetch the user's balance from Supabase
       const { data, error } = await supabase
@@ -48,18 +48,21 @@ async function getTokenPrice(tokenName) {
         .select('*')
         .eq('user_id', userId)
         .single();
-     // console.log(data)
+      const balance = data[`${tokenFrom}`]
+
       if (error) {
         throw new Error('Unable to fetch user balance.');
       }
+
+      console.log(balance)
   
-      return data.balance;
+      return balance;
     } catch (error) {
       console.error(error);
     }
   }
 
-  getUserBalance("4abb6b11-3768-4b86-9515-8d1cd4a9b4cb");
+  
 
   async function updateUserBalance(userId, tokenName, amount) {
     try {
@@ -69,7 +72,7 @@ async function getTokenPrice(tokenName) {
         .select(tokenName)
         .eq('user_id', userId)
         .single();
-       console.log(userData)
+      // console.log(userData)
       if (fetchError) {
         throw new Error('Unable to fetch user balance.');
       }
@@ -82,12 +85,13 @@ async function getTokenPrice(tokenName) {
         .from('users_balance')
         .update({ [tokenName]: updatedBalance })
         .eq('user_id', userId);
-  
+      
+      
       if (updateError) {
         throw new Error('Unable to update user balance.');
       }
   
-      console.log('User balance updated successfully');
+      //console.log('User balance updated successfully');
     } catch (error) {
       console.error('Error updating user balance:', error.message);
     }
@@ -99,60 +103,58 @@ async function getTokenPrice(tokenName) {
   
 
 
-export async function performTokenSwap(userId, tokenFrom, amountFrom, tokenTo) {
-  try {
-    // Check if the user has enough balance of the 'tokenFrom' to perform the swap
-    const userBalance = await getUserBalance(userId, tokenFrom);
-    
-    if (userBalance < amountFrom) {
-      throw new Error("Insufficient balance to perform the swap.");
-    }
-    
-    // Fetch the current prices of tokens
-    const priceTokenFrom = await getTokenPrice(tokenFrom);
-    const priceTokenTo = await getTokenPrice(tokenTo);
-    
-    // Calculate the amount of 'tokenTo' received for the given 'amountFrom'
-    const amountTo = (amountFrom * priceTokenFrom) / priceTokenTo;
-    
-    // Perform the swap by deducting 'amountFrom' of 'tokenFrom' and adding 'amountTo' of 'tokenTo'
-    await updateUserBalance(userId, tokenFrom, -amountFrom);
-    await updateUserBalance(userId, tokenTo, amountTo);
+  export async function performTokenSwap(userId, tokenFrom, amountFrom, tokenTo) {
+    try {
+      // Check if the user has enough balance of the 'tokenFrom' to perform the swap
+      const userBalance = await getUserBalance(userId, tokenFrom);;
 
-      // Record the swap transaction in the "swap_transactions" table
+      if (!userBalance) {
+        throw new Error("Failed to fetch balance to perform the swap.");
+      }
+      console.log(userBalance, amountFrom)
+      if (userBalance < amountFrom) {
+        throw new Error("Insufficient balance to perform the swap.");
+      }
       
+      // Fetch the current prices of tokens
+      const priceTokenFrom = await getTokenPrice(tokenFrom);
+      const priceTokenTo = await getTokenPrice(tokenTo);
+      
+      // Calculate the amount of 'tokenTo' received for the given 'amountFrom'
+      const amountTo = (amountFrom * priceTokenFrom) / priceTokenTo;
+      
+      // Perform the swap by deducting 'amountFrom' of 'tokenFrom' and adding 'amountTo' of 'tokenTo'
+      await updateUserBalance(userId, tokenFrom, -amountFrom);
+      await updateUserBalance(userId, tokenTo, amountTo);
+  
+      // Record the swap transaction in the "swap_transactions" table
       const { data, error } = await supabase
-      .from('swap-transactions')
-      .insert({
-        user_id: userId,
-        token_to: tokenTo,
-        amount_to: amountTo,
-        token_from: tokenFrom,
-        amount_from: amountFrom,
-      });
-    
-    console.log([
-      {user_id: userId},
-      {token_to: tokenTo},
-      {amount_to: amountTo},
-      {token_from: tokenFrom},
-      {amount_from: amountFrom},
-    ])
-    
-    if (error) {
-      throw new Error('Unable to record swap transaction.' );
-      return { success: false, error: error }
+        .from('swap-transactions')
+        .insert({
+          user_id: userId,
+          token_to: tokenTo,
+          amount_to: amountTo,
+          token_from: tokenFrom,
+          amount_from: amountFrom,
+        });
+      
+      if (error) {
+        throw new Error('Unable to record swap transaction.');
+        return { success: false, error: error }
+      }
+  
+      console.log('Swap transaction recorded successfully');
+      return { success: true, error: null }
+    } catch (error) {
+      console.error(error);
+      return { success: false, error: error.message }
     }
-
-    console.log('Swap transaction recorded successfully');
-    return { success: true, error: null }
-  } catch (error) {
-    console.error(error);
   }
-}
-
+  
+  
 const tokenTo = 'ethereum'
 const amountFrom = 0.3
 const tokenFrom = 'bitcoin'
 const userId = "4abb6b11-3768-4b86-9515-8d1cd4a9b4cb"
-// performTokenSwap(userId, tokenFrom, amountFrom, tokenTo)
+performTokenSwap(userId, tokenFrom, amountFrom, tokenTo)
+//getUserBalance(userId, tokenFrom);

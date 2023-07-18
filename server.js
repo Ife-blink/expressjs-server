@@ -89,7 +89,7 @@ router.post('/signup', async (req, res) => {
 
       if (swap.success) {
         // Swap-up successful
-        return res.status(200).json({ message: 'Swap successful' });
+        return res.status(200).json({ message: true });
       } else {
         // Handle swap error
         return res.status(500).json({ error: swap.error });
