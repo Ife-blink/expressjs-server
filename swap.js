@@ -113,7 +113,7 @@ async function getTokenPrice(tokenName) {
       }
       console.log(userBalance, amountFrom)
       if (userBalance < amountFrom) {
-        throw new Error("Insufficient balance to perform the swap.");
+        throw new Error("Insufficient token balance .");
       }
       
       // Fetch the current prices of tokens
