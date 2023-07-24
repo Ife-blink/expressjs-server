@@ -54,7 +54,7 @@ export const simulatePriceFluctuation = (timestamp) => {
     return price;
   };
 
-  const getTokenPrice = async (tokenSymbol) => {
+ export const generateQTMPrice = async () => {
     // Replace this with your token price fetching logic from an API or database
     // For demonstration, let's use a random initial price and simulate fluctuations
     let initialPrice = Math.random() * 1000; // Random initial price between 0 and 1000
@@ -101,14 +101,7 @@ export const simulatePriceFluctuation = (timestamp) => {
   // Call the function to get the last entry
  
 
-  const job = new CronJob('* * * * * *', async () => {
-    console.log('Running price update cron job...');
-    //await getTokenPrice('QTM')
-    console.log('Price update completed.');
-  });
-  
-  // Start the cron job
-  // job.start();
+ 
 
   
 

@@ -116,7 +116,7 @@ const first_name = 'Ife'
 const last_name = 'Baby'
 const ref_token = 'HF440I'
 const password = "Flexi241"
-loginUser(email, password)
+// loginUser(email, password)
 // signUp( email, password, first_name, last_name, ref_token )
 // .then(results =>{
 //   console.log(results)

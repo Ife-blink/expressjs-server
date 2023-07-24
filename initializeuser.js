@@ -103,4 +103,4 @@ export async function createWalletAddressesIfNotExists(userId) {
   }
   
   const userId = '4abb6b11-3768-4b86-9515-8d1cd4a9b4cb'
-  createWalletAddressesIfNotExists(userId)    
+  //createWalletAddressesIfNotExists(userId)    

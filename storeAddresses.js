@@ -15,24 +15,28 @@ const url = process.env.SUPABASE_URL;
 if (!url) throw new Error(`Expected env var SUPABASE_URL`);
 
 // Initialize Supabase client
-const supabase = createClient(url, privateKey);
+const supabase = createClient(url, privateKey, {
+  auth: {
+    persistSession: false
+  
+}});
 
 // Function to store wallet addresses for a user
 export async function createWalletAddresses(uuid) {
   try {
      
     const solWallet = generateSolanaWallet();
-    console.log('Solana Public Key:', solWallet.publicKey);
-    console.log('Solana Private Key:', solWallet.privateKey);
+   // console.log('Solana Public Key:', solWallet.publicKey);
+   // console.log('Solana Private Key:', solWallet.privateKey);
 
     const btcWallet = generateBitcoinWallet();
-    console.log("SAVE BUT DO NOT SHARE THIS:", btcWallet.privateKey.toString('hex'));
-    console.log("Address:", btcWallet.publicAddress);
+    //console.log("SAVE BUT DO NOT SHARE THIS:", btcWallet.privateKey.toString('hex'));
+    //console.log("Address:", btcWallet.publicAddress);
 
     const ethWallet = generateEthereumWallet();
-    console.log('Ethereum Private Key:', ethWallet.privateKey);
-    console.log('Ethereum Public Key:', ethWallet.publicKey);
-    console.log('Ethereum Address:', ethWallet.address);
+    // console.log('Ethereum Private Key:', ethWallet.privateKey);
+    // console.log('Ethereum Public Key:', ethWallet.publicKey);
+    // console.log('Ethereum Address:', ethWallet.address);
     // Construct the data objects with user ID and wallet addresses for each cryptocurrency
     const bitcoinWallet = {
       publicKey: btcWallet.publicAddress,
@@ -54,8 +58,8 @@ export async function createWalletAddresses(uuid) {
 
     const { data, error } = await supabase.from('wallets').insert({ user_id: id, bitcoin_wallet: bitcoinWallet, eth_wallet: ethereumWallet, sol_wallet: solanaWallet });
     
-    console.log(data);
-    console.log(error)
+   // console.log(data);
+    //console.log(error)
     console.log('Wallet addresses stored successfully');
   } catch (error) {
     console.error('Error storing wallet addresses:', error.message);
@@ -71,4 +75,4 @@ export async function createWalletAddresses(uuid) {
 //   ethereum: ['ETHEREUM_ADDRESS_1', 'ETHEREUM_ADDRESS_2'], // Provide Ethereum wallet addresses
 // };
 
-createWalletAddresses();
+//createWalletAddresses();

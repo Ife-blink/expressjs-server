@@ -1,16 +1,25 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import { CronJob } from 'cron';
 import { verifyReferralToken } from './refValidation.js';
 import { signUp } from './signUp.js';
 import { createClient } from "@supabase/supabase-js";
 import { createUserBalance } from './initializeuser.js';
 import { performTokenSwap } from './swap.js';
+import { generateQTMPrice } from './quantumPrice.js';
 import { createWalletAddressesIfNotExists } from './initializeuser.js';
 import * as dotenv from 'dotenv'
 import cors from 'cors'
 const app = express();
 
+const job = new CronJob('0 0 * * *', async () => {
+  console.log('Running price update cron job...');
+  await generateQTMPrice()
+  console.log('Price update completed.');
+});
 
+// Start the cron job
+job.start();
 
 
 const router = express.Router()
