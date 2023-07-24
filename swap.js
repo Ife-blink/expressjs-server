@@ -1,4 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
+import { getQTMPrice } from "./quantumPrice.js";
 import axios from "axios";
 import * as dotenv from 'dotenv'
 
@@ -111,18 +112,39 @@ async function getTokenPrice(tokenName) {
       if (!userBalance) {
         throw new Error("Failed to fetch balance to perform the swap.");
       }
-      console.log(userBalance, amountFrom)
+
+      console.log("Balance" + userBalance, "Amount from:" + amountFrom)
+
       if (userBalance < amountFrom) {
-        throw new Error("Insufficient token balance .");
+        throw new Error("Insufficient token balance.");
       }
+
+      let priceTokenFrom;
+  let priceTokenTo;
+
+  if (tokenFrom === 'quantum') {
+    priceTokenFrom = await getQTMPrice();
+    console.log("Quantum Price: " + priceTokenFrom, priceTokenTo);
+  } else {
+    priceTokenFrom = await getTokenPrice(tokenFrom);
+  }
+
+  if (tokenTo === 'quantum') {
+    priceTokenTo = await getQTMPrice();
+    console.log("Qunatum price" + priceTokenTo)
+  } else {
+    priceTokenTo = await getTokenPrice(tokenTo);
+  }
       
       // Fetch the current prices of tokens
-      const priceTokenFrom = await getTokenPrice(tokenFrom);
-      const priceTokenTo = await getTokenPrice(tokenTo);
+      
+      
+      console.log("Eth price" + priceTokenFrom)
+      
       
       // Calculate the amount of 'tokenTo' received for the given 'amountFrom'
       const amountTo = (amountFrom * priceTokenFrom) / priceTokenTo;
-      
+      console.log("amount exchanged:" + amountTo)
       // Perform the swap by deducting 'amountFrom' of 'tokenFrom' and adding 'amountTo' of 'tokenTo'
       await updateUserBalance(userId, tokenFrom, -amountFrom);
       await updateUserBalance(userId, tokenTo, amountTo);
@@ -152,9 +174,9 @@ async function getTokenPrice(tokenName) {
   }
   
   
-const tokenTo = 'ethereum'
+const tokenTo = 'solana'
 const amountFrom = 0.3
-const tokenFrom = 'bitcoin'
+const tokenFrom = 'quantum'
 const userId = "4abb6b11-3768-4b86-9515-8d1cd4a9b4cb"
 //performTokenSwap(userId, tokenFrom, amountFrom, tokenTo)
 //getUserBalance(userId, tokenFrom);
