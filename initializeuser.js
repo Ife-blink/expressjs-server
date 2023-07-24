@@ -101,6 +101,7 @@ export async function createWalletAddressesIfNotExists(userId) {
         { id: userId, init: true },
         ])
         .select()
+        
          if(error){
            return { error: "Failed to Initialize"}
          }
@@ -114,7 +115,7 @@ export async function createWalletAddressesIfNotExists(userId) {
     }
   }
   
-  const userId = '4abb9b11-3768-4b86-9515-8d1cd4a9b4ca'
- const initialize = await createWalletAddressesIfNotExists(userId)
-  //.then((res) => console.log(res)) 
-  console.log(initialize)
+//   const userId = '4abb9b11-3768-4b86-9515-8d1cd4a9b4ca'
+//  const initialize = await createWalletAddressesIfNotExists(userId)
+//   //.then((res) => console.log(res)) 
+//   console.log(initialize)
