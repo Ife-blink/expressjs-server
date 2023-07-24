@@ -97,6 +97,8 @@ export const simulatePriceFluctuation = (timestamp) => {
       return null;
     }
   }
+
+  //getQTMPrice()
   
   // Call the function to get the last entry
  
