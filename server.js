@@ -84,7 +84,7 @@ router.post('/signup', async (req, res) => {
       };
       
     } catch (error) {
-      return res.status(500).json({ error: 'An error occurred during Initialization.' });
+      return res.status(500).json({ error: 'An error occurred during initialization.' });
       console.log(error)
     }
   });
