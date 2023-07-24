@@ -62,7 +62,7 @@ async function checkUserBalance(uuid) {
           if (!existingUser || existingUser.length === 0) {
             const { data, error } = await supabase
               .from('users_balance')
-              .insert([{ user_id: userId, bitcoin_balance: 0, eth_balance: 0, sol_balance: 0 }])
+              .insert([{ user_id: userId, bitcoin: 0, ethereum: 0, solana: 0, quantum: 0 }])
               .select();
       
             if (error) {
@@ -94,7 +94,19 @@ export async function createWalletAddressesIfNotExists(userId) {
       // If the user does not exist, create and store wallet addresses
       if (!existingUser || existingUser.length === 0) {
         await createWalletAddresses(userId);
+        
+        const { data, error } = await supabase
+        .from('initialized')
+        .insert([
+        { id: userId, init: true },
+        ])
+        .select()
+         if(error){
+           return { error: "Failed to Initialize"}
+         }
+         return{ success: true }
       } else {
+        return { error: "User already initialized"}
         console.log('Wallet addresses already exist for the user');
       }
     } catch (error) {
@@ -102,5 +114,7 @@ export async function createWalletAddressesIfNotExists(userId) {
     }
   }
   
-  const userId = '4abb6b11-3768-4b86-9515-8d1cd4a9b4cb'
-  //createWalletAddressesIfNotExists(userId)    
+  const userId = '4abb9b11-3768-4b86-9515-8d1cd4a9b4ca'
+ const initialize = await createWalletAddressesIfNotExists(userId)
+  //.then((res) => console.log(res)) 
+  console.log(initialize)
