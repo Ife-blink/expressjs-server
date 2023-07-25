@@ -103,12 +103,12 @@ export async function createWalletAddressesIfNotExists(userId) {
         .select()
         
          if(error){
-           return { error: "Failed to Initialize"}
+           return { error: error }
          }
          return{ success: true }
       } else {
-        return { error: "User already initialized"}
         console.log('Wallet addresses already exist for the user');
+        return { error: "User already initialized" };
       }
     } catch (error) {
       console.error('Error checking wallet existence:', error.message);

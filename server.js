@@ -72,21 +72,20 @@ router.post('/signup', async (req, res) => {
     // Additional validation and error handling can be done here
   
     try {
-       createUserBalance(uuid);
-       createWalletAddressesIfNotExists(uuid)
-       .then((response) => res.status(200).json({ message: response })) 
-
-      // if (initialize.success) {
-      //   // Creation successful
-      //   return res.status(200).json({ message: 'Sucessfully Initialized' });
-      // } else {
-      //   // Handle sign-up error
-      //   return res.status(500).json({ error: initialize.error });
-      // };
-      
+      createUserBalance(uuid);
+      createWalletAddressesIfNotExists(uuid)
+        .then((response) => {
+          if (response.success) {
+            // Creation successful
+            return res.status(200).json({ message: 'Successfully Initialized' });
+          } else {
+            // Handle sign-up error
+            return res.status(500).json({ error: response.error });
+          }
+        });
     } catch (error) {
+      console.error('An error occurred during initialization:', error);
       return res.status(500).json({ error: 'An error occurred during initialization.' });
-      console.log(error)
     }
   });
 
