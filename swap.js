@@ -120,7 +120,7 @@ async function getTokenPrice(tokenName) {
       }
 
       let priceTokenFrom;
-  let priceTokenTo;
+      let priceTokenTo;
 
   if (tokenFrom === 'quantum') {
     priceTokenFrom = await getQTMPrice();
