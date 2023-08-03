@@ -12,6 +12,20 @@ import * as dotenv from 'dotenv'
 import cors from 'cors'
 const app = express();
 
+dotenv.config();
+
+const privateKey = process.env.SUPABASE_PRIVATE_KEY;
+if (!privateKey) throw new Error(`Expected env var SUPABASE_PRIVATE_KEY`);
+
+const url = process.env.SUPABASE_URL;
+if (!url) throw new Error(`Expected env var SUPABASE_URL`);
+
+const supabase = createClient(url, privateKey, {
+  auth: {
+    persistSession: false
+  
+}});
+
 const job = new CronJob('0 0 * * *', async () => {
   console.log('Running price update cron job...');
   await generateQTMPrice()
@@ -110,6 +124,19 @@ router.post('/signup', async (req, res) => {
     }
   });
   
+
+  router.post('/hook', async (req, res) => {
+     console.log(req.body)
+     const userId = req.body.record.user_id
+        
+    //  const { data, error } = await supabase
+    // .from('isnotificationread')
+    // .update({ newnotification: true })
+    // .eq('user_id', userId)
+    // .select()
+    //  console.log(data)
+    return res.status(200).json({ data: req.body });
+  });
 
 
 
