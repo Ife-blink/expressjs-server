@@ -7,19 +7,22 @@ import { createClient } from "@supabase/supabase-js";
 import { createUserBalance } from './initializeuser.js';
 import { performTokenSwap } from './swap.js';
 import { generateQTMPrice } from './quantumPrice.js';
+import { handleOTP } from './otphandler.js';
+import { reStoreOTP } from './otphandler.js';
+import { verifyOTP } from './verifyOtp.js';
 import { createWalletAddressesIfNotExists } from './initializeuser.js';
 import * as dotenv from 'dotenv'
 import cors from 'cors'
 const app = express();
 
-const job = new CronJob('0 0 * * *', async () => {
-  console.log('Running price update cron job...');
-  await generateQTMPrice()
-  console.log('Price update completed.');
-});
+// const job = new CronJob('0 0 * * *', async () => {
+//   console.log('Running price update cron job...');
+//   await generateQTMPrice()
+//   console.log('Price update completed.');
+// });
 
-// Start the cron job
-job.start();
+// // Start the cron job
+// job.start();
 
 
 const router = express.Router()
@@ -106,6 +109,70 @@ router.post('/signup', async (req, res) => {
       
     } catch (error) {
       return res.status(500).json({ error: 'An error occurred during swap.' });
+      console.log(error)
+    }
+  });
+  
+
+  router.post('/handle-otp', async (req, res) => {
+    const { email } = req.body;
+    // Additional validation and error handling can be done here
+  
+    try {
+      const otp = await handleOTP(email)
+
+      if (otp.success) {
+        // Swap-up successful
+        return res.status(200).json({ message: otp.message });
+      } else {
+        // Handle swap error
+        return res.status(500).json({ error: otp.error });
+      };
+      
+    } catch (error) {
+      return res.status(500).json({ error: 'An error occurred with token creation.' });
+      console.log(error)
+    }
+  });
+
+  router.post('/resend-otp', async (req, res) => {
+    const { email } = req.body;
+    // Additional validation and error handling can be done here
+  
+    try {
+      const otp = await reStoreOTP(email)
+
+      if (otp.success) {
+        // Swap-up successful
+        return res.status(200).json({ message: otp.message });
+      } else {
+        // Handle swap error
+        return res.status(500).json({ error: otp.error });
+      };
+      
+    } catch (error) {
+      return res.status(500).json({ error: 'An error occurred with token reset.' });
+      console.log(error)
+    }
+  });
+
+  router.post('/verify-otp', async (req, res) => {
+    const { email, token } = req.body;
+    // Additional validation and error handling can be done here
+  
+    try {
+      const swap = await verifyOTP(token, email)
+
+      if (swap.success) {
+        // Swap-up successful
+        return res.status(200).json({ message: true });
+      } else {
+        // Handle swap error
+        return res.status(500).json({ error: swap.error });
+      };
+      
+    } catch (error) {
+      return res.status(500).json({ error: 'An error occurred during verification.' });
       console.log(error)
     }
   });

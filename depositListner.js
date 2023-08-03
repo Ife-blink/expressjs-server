@@ -6,8 +6,8 @@ ws.on('open', () => {
     console.log('Listening to changes in address');
     const subscriptionMessage = {
         // op: 'unconfirmed_sub',
-        op: "addr_sub",
-        addr: "1NpsjXkxk2B3B2WxRQFQHv2eHFHVRN4nLz"
+        op: "unconfirmed_sub",
+        // addr: "1NpsjXkxk2B3B2WxRQFQHv2eHFHVRN4nLz"
       };
       
       ws.send(JSON.stringify(subscriptionMessage));
@@ -18,4 +18,6 @@ ws.on('open', () => {
     
     // Handle the received message
     console.log('Received message:', message);
+    console.log(message.x.out);
+    //console.log(message.x.out);
   });
