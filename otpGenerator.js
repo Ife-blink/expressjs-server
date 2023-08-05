@@ -1,5 +1,5 @@
 export function generateOTP() {
-    const otpLength = 6;
+    const otpLength = 5;
     let otp = '';
   
     for (let i = 0; i < otpLength; i++) {
@@ -14,5 +14,5 @@ export function generateOTP() {
     return otp;
   }
 
- //generateOTP()
+//  generateOTP()
   

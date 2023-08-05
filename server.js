@@ -73,7 +73,7 @@ router.post('/signup', async (req, res) => {
   router.post('/init', async (req, res) => {
     const { uuid } = req.body;
     // Additional validation and error handling can be done here
-  
+    console.log(req.body)
     try {
       createUserBalance(uuid);
       createWalletAddressesIfNotExists(uuid)
@@ -95,7 +95,6 @@ router.post('/signup', async (req, res) => {
   router.post('/swap', async (req, res) => {
     const { userId, tokenFrom, amountFrom, tokenTo } = req.body;
     // Additional validation and error handling can be done here
-  
     try {
       const swap = await performTokenSwap(userId, tokenFrom, amountFrom, tokenTo)
 

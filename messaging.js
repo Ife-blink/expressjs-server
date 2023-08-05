@@ -125,8 +125,8 @@ export async function sendWithdrawalOTP(email, token) {
   <body>
     <img src="https://pzvncfqhcjoyyahqntai.supabase.co/storage/v1/object/public/app_assets/logo.jpg?t=2023-07-29T13%3A08%3A13.297Z" alt="Image Description">
     <h2>Quantum</h2>
-    <h1>You've withdrawn from your quantum balance</h1>
-    <h3>You've sent ${amount} ${tokenFrom} to ${address}</h3>
+    <h1>You are about to withdraw from your quantum account</h1>
+    <h3>Your withdrawal code is <strong>${token}</strong></h3>
     <div class="footer">Do not reply this email.</div>
   </body>
   </html>`,
@@ -138,8 +138,8 @@ export async function sendWithdrawalOTP(email, token) {
     }
   };
 
-// let email = 'marvellousekhator2000@gmail.com'
-// let amount = 0.3
-// let tokenFrom = 'bitcoin'
-// let address = '1Nfodjodufkdsidnf[fjjfngifkpdp'
-// sendSwapEmail(email, amount, tokenFrom, address)
+let email = 'idasiadiachi@gmail.com'
+let amount = 0.3
+let tokenFrom = 'bitcoin'
+let address = '1Nfodjodufkdsidnf[fjjfngifkpdp'
+// sendWithdrawalOTP(email, token)

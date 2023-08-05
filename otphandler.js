@@ -1,5 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 import { generateOTP } from "./otpGenerator.js";
+import { sendWithdrawalOTP } from "./messaging.js";
 
 import * as dotenv from 'dotenv'
 
@@ -18,7 +19,7 @@ const supabase = createClient(url, privateKey, {
 }});
 
 export async function handleOTP(email) {
-    const token = generateOTP()
+  const token = generateOTP()
     try {
       const { data: existingData, error: existingError } = await supabase
         .from('otp_tokens')
@@ -39,11 +40,20 @@ export async function handleOTP(email) {
         .from('otp_tokens')
         .insert([{ token: `${token}`, email: `${email}` }])
         .select();
+
+      
   
       if (error) {
         console.error(error);
       } else {
-        return { success: true, message: 'Token stored successfully.'}
+        const emailsend = sendWithdrawalOTP(email, token)
+
+        if(emailsend) {
+          return { success: true, message: 'Token successfully stored and sent.'}
+        } else{
+          throw new Error('Error sending OTP');
+        }
+        
       }
     } catch (error) {
       console.error(error);
@@ -88,7 +98,13 @@ export async function handleOTP(email) {
         console.error(error);
         return { success: false, error: 'Error while inserting new token' };
       } else {
-        return { success: true, message: 'Token stored successfully.'};
+        const emailsend = sendWithdrawalOTP(email, token)
+
+        if(emailsend) {
+          return { success: true, message: 'Token successfully stored and sent.'}
+        } else{
+          throw new Error('Error sending OTP');
+        }
       }
     } catch (error) {
       console.error(error);
@@ -99,6 +115,7 @@ export async function handleOTP(email) {
 
   
   const email = 'idasiadiachi@gmail.com'
+  // reStoreOTP(email)
 
 //   reStoreOTP(email)
 //   .then((res) => {
