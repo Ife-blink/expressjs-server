@@ -15,6 +15,6 @@ export function generateEthereumWallet() {
 
 // Example usage
 const ethereumWallet = generateEthereumWallet();
-console.log('Ethereum Private Key:', ethereumWallet.privateKey);
-console.log('Ethereum Public Key:', ethereumWallet.publicKey);
-console.log('Ethereum Address:', ethereumWallet.address);
+// console.log('Ethereum Private Key:', ethereumWallet.privateKey);
+// console.log('Ethereum Public Key:', ethereumWallet.publicKey);
+// console.log('Ethereum Address:', ethereumWallet.address);

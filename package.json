@@ -18,6 +18,7 @@
     "@supabase/supabase-js": "^2.26.0",
     "@tatumio/btc": "^2.2.21",
     "@tatumio/eth": "^2.2.21",
+    "@tatumio/solana": "^2.2.21",
     "axios": "^1.4.0",
     "body-parser": "^1.20.2",
     "coinkey": "^3.0.0",

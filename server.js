@@ -71,12 +71,11 @@ router.post('/signup', async (req, res) => {
   });
 
   router.post('/init', async (req, res) => {
-    const { uuid } = req.body;
-    // Additional validation and error handling can be done here
-    console.log(req.body)
+    const { record: { id } } = req.body;
+
     try {
-      createUserBalance(uuid);
-      createWalletAddressesIfNotExists(uuid)
+      createUserBalance(id);
+      createWalletAddressesIfNotExists(id)
         .then((response) => {
           if (response.success) {
             // Creation successful
@@ -114,7 +113,7 @@ router.post('/signup', async (req, res) => {
   
 
   router.post('/handle-otp', async (req, res) => {
-    const { email } = req.body;
+    const { record: { email } } = req.body;
     // Additional validation and error handling can be done here
   
     try {
@@ -157,12 +156,11 @@ router.post('/signup', async (req, res) => {
 
   router.post('/verify-otp', async (req, res) => {
     const { email, token } = req.body;
-    // Additional validation and error handling can be done here
   
     try {
-      const swap = await verifyOTP(token, email)
+      const verify = await verifyOTP(token, email)
 
-      if (swap.success) {
+      if (verify.success) {
         // Swap-up successful
         return res.status(200).json({ message: true });
       } else {
@@ -176,7 +174,12 @@ router.post('/signup', async (req, res) => {
     }
   });
   
-
+  router.post('/hook', async (req, res) => {
+    const { record: { email } } = req.body;
+    console.log(email)
+    console.log(req.body)
+   return res.status(200).json({ data: req.body });
+ });
 
 
 

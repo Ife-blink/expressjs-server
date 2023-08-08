@@ -111,11 +111,11 @@ async function getUser(userId) {
 
 // getUser('1c822351-3a2b-4066-b7df-28a9535348cf')
 
-const email = "idasiadiachi@gmail.com"
+const email = "ivasiadiachi@gmail.com"
 const first_name = 'Ife'
 const last_name = 'Baby'
 const ref_token = 'HF440I'
-const password = "Flexi241"
+const password = "Ved1304$"
 // loginUser(email, password)
 // signUp( email, password, first_name, last_name, ref_token )
 // .then(results =>{

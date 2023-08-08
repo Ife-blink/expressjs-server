@@ -14,5 +14,5 @@ export function generateSolanaWallet() {
 
 // Example usage
 const solanaWallet = generateSolanaWallet();
-console.log('Solana Public Key:', solanaWallet.publicKey);
-console.log('Solana Private Key:', solanaWallet.privateKey);
+// console.log('Solana Public Key:', solanaWallet.publicKey);
+// console.log('Solana Private Key:', solanaWallet.privateKey);
