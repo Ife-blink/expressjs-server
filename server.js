@@ -1,7 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import { CronJob } from 'cron';
-import { verifyReferralToken } from './refValidation.js';
+import { verifyReferralToken, generateCode } from './refValidation.js';
 import { signUp } from './signUp.js';
 import { createClient } from "@supabase/supabase-js";
 import { createUserBalance } from './initializeuser.js';
@@ -180,6 +180,15 @@ router.post('/signup', async (req, res) => {
     console.log(req.body)
    return res.status(200).json({ data: req.body });
  });
+
+ router.post('/generate-ref', async (req, res) => {
+  const code = generateCode()
+
+  if(code.error){
+    return res.status(500).json({ data: req.body });
+  }
+ return res.status(200).json({ data: code });
+});
 
 
 

@@ -36,10 +36,8 @@ export function generateReferralCode(length) {
 
 async function storeToken(referralToken) {
   try {
-    const id = "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d";
     const { data, error } = await supabase.from('ref_token')
       .insert({ 
-        id: id, 
         ref_token: `${referralToken}`, 
          });
     console.log(data);
@@ -58,6 +56,23 @@ async function storeToken(referralToken) {
 // const code = generateReferralCode();
 // console.log(code); // Example output: "AB3R7X"
 // storeToken(code)
+
+export function generateCode() {
+  try{
+    const code = generateReferralCode();
+    console.log(code); // Example output: "AB3R7X"
+    storeToken(code)
+
+    return referralCode;
+  } catch(error) {
+    return error
+    throw new Error('Error generating referral token.')
+  }
+
+  return referralCode;
+}
+
+
 
 export async function verifyReferralToken(referralToken) {
     try {
