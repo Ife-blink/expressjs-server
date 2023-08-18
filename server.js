@@ -175,9 +175,8 @@ router.post('/signup', async (req, res) => {
   });
   
   router.post('/hook', async (req, res) => {
-    const { record: { email } } = req.body;
-    console.log(email)
-    console.log(req.body)
+    const { record: { from } } = req.body;
+    console.log(from)
    return res.status(200).json({ data: req.body });
  });
 
