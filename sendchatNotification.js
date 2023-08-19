@@ -18,7 +18,7 @@ const supabase = createClient(url, privateKey, {
 }});
 
 
-async function sendNotification(id) {
+export async function sendNotification(id) {
   // Function to fetch the current price of a token from an API (e.g., CoinGecko API)
 
   try { 

@@ -11,6 +11,7 @@ import { handleOTP } from './otphandler.js';
 import { reStoreOTP } from './otphandler.js';
 import { verifyOTP } from './verifyOtp.js';
 import { createWalletAddressesIfNotExists } from './initializeuser.js';
+import { sendNotification } from './sendchatNotification.js';
 import * as dotenv from 'dotenv'
 import cors from 'cors'
 const app = express();
@@ -176,9 +177,15 @@ router.post('/signup', async (req, res) => {
   
   router.post('/hook', async (req, res) => {
     const { record: { from } } = req.body;
-    console.log(from)
+    
    return res.status(200).json({ data: req.body });
  });
+
+ router.post('/sendnotification', async (req, res) => {
+  const { record: { from } } = req.body;
+  sendNotification(from)
+ return res.status(200).json({ data: req.body });
+});
 
  router.post('/generate-ref', async (req, res) => {
   const code = generateCode()
