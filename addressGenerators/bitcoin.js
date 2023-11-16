@@ -7,5 +7,5 @@ export function generateBitcoinWallet() {
 
 const wallet = generateBitcoinWallet();
 
-// console.log("SAVE BUT DO NOT SHARE THIS:", wallet.privateKey.toString('hex'));
-// console.log("Address:", wallet.publicAddress);
+console.log("SAVE BUT DO NOT SHARE THIS:", wallet.privateKey.toString('hex'));
+console.log("Address:", wallet.publicAddress);

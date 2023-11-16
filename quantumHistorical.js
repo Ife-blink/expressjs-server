@@ -56,7 +56,7 @@ async function generateCoinData() {
     const  timeStamp = getTimestamp(365 - i)
     const  price = newValue.toFixed(2)
 
-    const { data, error } = await supabase.from('quantum_rice').insert([{
+    const { data, error } = await supabase.from('quantum_Price').insert([{
         time: timeStamp,
         value: price
       }]);
@@ -95,7 +95,7 @@ async function generateCoinData() {
   }
   
   // Example usage:
-  
+  generateCoinData();
   
   // Log the coin data
   

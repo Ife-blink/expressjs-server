@@ -20,7 +20,7 @@ const supabase = createClient(url, privateKey, {
 }});
 
 
-export async function registerUser( ref_token, first_name, last_name, email, password) {
+export async function registerUser(ref_token, first_name, last_name, email, password) {
   // auth user
   await signUp(email, password);
  

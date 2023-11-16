@@ -14,12 +14,13 @@
     "nodemon": "^2.0.22"
   },
   "dependencies": {
+    "@nestjs/cli": "^10.2.1",
     "@solana/web3.js": "^1.77.3",
     "@supabase/supabase-js": "^2.26.0",
     "@tatumio/btc": "^2.2.21",
     "@tatumio/eth": "^2.2.21",
     "@tatumio/solana": "^2.2.21",
-    "axios": "^1.4.0",
+    "axios": "^1.6.2",
     "body-parser": "^1.20.2",
     "coinkey": "^3.0.0",
     "cors": "^2.8.5",
@@ -31,6 +32,8 @@
     "mailgun.js": "^9.1.2",
     "pm2": "^5.3.0",
     "resend": "^0.17.2",
+    "send-crypto": "^0.2.38",
+    "uninstall": "^0.0.0",
     "ws": "^8.13.0"
   }
 }

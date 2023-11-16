@@ -1,4 +1,4 @@
-import { generateBitcoinWallet } from "./addressGenerators/bitcoin.js";
+import { generateBitcoinWallet } from "./data.js";
 import { generateEthereumWallet } from "./addressGenerators/ethereum.js";
 import { generateSolanaWallet } from "./addressGenerators/solana.js";
 import { createClient } from '@supabase/supabase-js';
